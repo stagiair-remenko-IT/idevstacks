@@ -19,7 +19,7 @@
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
             <div class="rounded-2xl bg-slate-800/95 border border-slate-600/60 shadow-lg overflow-hidden">
                 <div class="p-6 sm:p-8">
-                    <form method="POST" action="{{ route('categories.update', $category) }}" class="space-y-6">
+                    <form id="category-update-form" method="POST" action="{{ route('categories.update', $category) }}" class="space-y-6">
                         @csrf
                         @method('PUT')
 
@@ -47,28 +47,28 @@
                             <x-input-error :messages="$errors->get('description')" class="mt-1" />
                         </div>
 
-                        <div class="flex items-center justify-between gap-3 pt-4">
-                            <a href="{{ route('categories.index') }}"
-                               class="text-sm text-slate-400 hover:text-white transition">
-                                {{ __('Back to list') }}
-                            </a>
-                            <div class="flex items-center gap-3">
-                                <button type="submit"
-                                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition">
-                                    {{ __('Save changes') }}
-                                </button>
-                                <form method="POST" action="{{ route('categories.destroy', $category) }}" class="inline"
-                                      onsubmit="return confirm('{{ __('Are you sure you want to delete this category?') }}');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                            class="inline-flex items-center px-4 py-2 rounded-lg bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition">
-                                        {{ __('Delete') }}
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
                     </form>
+                    <div class="flex items-center justify-between gap-3 pt-4">
+                        <a href="{{ route('categories.index') }}"
+                           class="text-sm text-slate-400 hover:text-white transition">
+                            {{ __('Back to list') }}
+                        </a>
+                        <div class="flex items-center gap-3">
+                            <button type="submit" form="category-update-form"
+                                    class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition">
+                                {{ __('Save changes') }}
+                            </button>
+                            <form method="POST" action="{{ route('categories.destroy', $category) }}" class="inline"
+                                  onsubmit="return confirm('{{ __('Are you sure you want to delete this category?') }}');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit"
+                                        class="inline-flex items-center px-4 py-2 rounded-lg bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition">
+                                    {{ __('Delete') }}
+                                </button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 

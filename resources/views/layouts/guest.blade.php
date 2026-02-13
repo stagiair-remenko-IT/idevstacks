@@ -34,6 +34,10 @@
             <p class="mt-8 text-xs text-slate-500 text-center">
                 {{ __('Restricted to authorized IT staff only.') }}
             </p>
+
+            <p class="mt-4 text-xs text-slate-400 text-center">
+                © 2026 Hernan Martino Molina
+            </p>
         </div>
     </body>
 </html>

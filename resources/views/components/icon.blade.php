@@ -34,6 +34,8 @@
         'remote' => 'heroicon-o-computer-desktop',
         'network' => 'heroicon-o-signal',
         'lock' => 'heroicon-o-lock-closed',
+        'eye' => 'heroicon-o-eye',
+        'eye-slash' => 'heroicon-o-eye-slash',
         'map-pin' => 'heroicon-o-map-pin',
         'terminal' => 'heroicon-o-command-line',
         'key' => 'heroicon-o-key',

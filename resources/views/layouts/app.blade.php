@@ -15,7 +15,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased text-slate-800 bg-slate-300">
-        <div class="min-h-screen">
+        <div class="min-h-screen flex flex-col">
             @include('layouts.navigation')
 
             @if(session('status'))
@@ -44,9 +44,15 @@
             @endisset
 
             <!-- Page Content -->
-            <main class="pb-12">
+            <main class="flex-1 pb-12">
                 {{ $slot }}
             </main>
+
+            <footer class="py-4 mt-auto border-t border-slate-600/50 bg-slate-800">
+                <p class="text-center text-sm text-slate-400">
+                    © 2026 Hernan Martino Molina
+                </p>
+            </footer>
         </div>
     </body>
 </html>

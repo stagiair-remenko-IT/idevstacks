@@ -116,10 +116,22 @@
                                             </dt>
                                             <dd class="mt-2 text-slate-200">
                                                 @if($field->field_type === 'password' || $field->is_sensitive)
-                                                    <span class="inline-flex items-center gap-1.5 font-mono text-xs bg-slate-700/80 rounded-lg px-2.5 py-1.5 text-slate-400">
-                                                        <x-icon name="lock" class="h-3.5 w-3.5" />
-                                                        ••••••
-                                                    </span>
+                                                    <div x-data="{ revealed: false }" class="inline-flex items-center gap-2">
+                                                        <span x-show="!revealed" class="inline-flex items-center gap-1.5 font-mono text-xs bg-slate-700/80 rounded-lg px-2.5 py-1.5 text-slate-400">
+                                                            <x-icon name="lock" class="h-3.5 w-3.5" />
+                                                            ••••••
+                                                        </span>
+                                                        <span x-show="revealed" x-cloak class="font-mono text-xs bg-slate-700/50 border border-slate-600/50 rounded-lg px-2.5 py-1.5 text-slate-200 break-all">
+                                                            {{ $value }}
+                                                        </span>
+                                                        <button type="button"
+                                                                @click="revealed = !revealed"
+                                                                class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-400 hover:bg-slate-600/50 transition"
+                                                                :title="revealed ? '{{ __('Hide') }}' : '{{ __('Reveal') }}'">
+                                                            <span x-show="!revealed"><x-icon name="eye" class="h-4 w-4" /></span>
+                                                            <span x-show="revealed" x-cloak><x-icon name="eye-slash" class="h-4 w-4" /></span>
+                                                        </button>
+                                                    </div>
                                                 @else
                                                     <span class="font-mono text-xs bg-slate-700/50 border border-slate-600/50 rounded-lg px-2.5 py-1.5 text-slate-200 break-all">
                                                         {{ $value }}
