@@ -20,6 +20,7 @@ class StoreDocumentRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'company_id' => ['nullable', 'exists:companies,id'],
             'category_id' => ['nullable', 'exists:categories,id'],
             'title' => ['required', 'string', 'max:255'],
             'slug' => ['nullable', 'string', 'max:255', 'alpha_dash', 'unique:documents,slug'],

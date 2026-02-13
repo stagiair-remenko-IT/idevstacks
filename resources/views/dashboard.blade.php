@@ -2,56 +2,150 @@
     <x-slot name="header">
         <div class="flex items-center justify-between gap-4">
             <div>
-                <h2 class="font-semibold text-xl text-white leading-tight">
+                <h2 class="font-bold text-2xl text-white leading-tight tracking-tight">
                     {{ __('Dashboard') }}
                 </h2>
-                <p class="mt-0.5 text-sm text-slate-300">
+                <p class="mt-1 text-sm text-slate-400">
                     {{ __('Welcome back') }}{{ Auth::user()->name ? ', ' . Auth::user()->name : '' }}
                 </p>
+            </div>
+            <div class="flex items-center gap-2">
+                <select class="rounded-lg border-slate-600 bg-slate-700/50 px-3 py-2 text-sm text-white focus:border-indigo-500 focus:ring-indigo-500">
+                    <option>{{ now()->format('Y') }}</option>
+                </select>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-5xl mx-auto sm:px-6 lg:px-8">
-            <div class="grid grid-cols-3 gap-4">
-                {{-- DOCUMENTATION --}}
-                <a href="{{ route('documents.index') }}"
-                   class="group aspect-square flex flex-col items-center justify-center gap-3 rounded-2xl bg-slate-800/95 border border-slate-600/60 hover:border-indigo-500/70 hover:bg-slate-700/50 transition-all">
-                    <span class="flex items-center justify-center w-16 h-16 rounded-xl bg-indigo-600/80 text-white">
-                        <x-icon name="document" class="h-8 w-8" />
+    <div class="space-y-6">
+        {{-- Overview cards --}}
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
+            <div class="rounded-xl border border-slate-700/80 bg-slate-800/80 p-5 shadow-lg">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-lg bg-slate-600/80 text-slate-300">
+                        <x-icon name="building" class="h-6 w-6" />
                     </span>
-                    <span class="text-base font-semibold text-white">{{ __('Documentation') }}</span>
+                    <div>
+                        <p class="text-2xl font-bold text-white">{{ $companiesCount ?? 0 }}</p>
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">{{ __('Companies') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-xl border border-slate-700/80 bg-slate-800/80 p-5 shadow-lg">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-600/80 text-white">
+                        <x-icon name="document" class="h-6 w-6" />
+                    </span>
+                    <div>
+                        <p class="text-2xl font-bold text-white">{{ $documentsCount ?? 0 }}</p>
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">{{ __('Total entries') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-xl border border-slate-700/80 bg-slate-800/80 p-5 shadow-lg">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-lg bg-emerald-600/80 text-white">
+                        <x-icon name="check" class="h-6 w-6" />
+                    </span>
+                    <div>
+                        <p class="text-2xl font-bold text-white">{{ $publishedCount ?? 0 }}</p>
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">{{ __('Published') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-xl border border-slate-700/80 bg-slate-800/80 p-5 shadow-lg">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-lg bg-amber-600/80 text-white">
+                        <x-icon name="clock" class="h-6 w-6" />
+                    </span>
+                    <div>
+                        <p class="text-2xl font-bold text-white">{{ $draftCount ?? 0 }}</p>
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">{{ __('Drafts') }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="rounded-xl border border-slate-700/80 bg-slate-800/80 p-5 shadow-lg">
+                <div class="flex items-center gap-3">
+                    <span class="flex h-12 w-12 items-center justify-center rounded-lg bg-indigo-500/80 text-white">
+                        <x-icon name="pin" class="h-6 w-6" />
+                    </span>
+                    <div>
+                        <p class="text-2xl font-bold text-white">{{ $pinnedCount ?? 0 }}</p>
+                        <p class="text-xs font-medium text-slate-400 uppercase tracking-wider">{{ __('Pinned') }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Recent documents table --}}
+        <div class="rounded-xl border border-slate-700/80 bg-slate-800/80 shadow-xl overflow-hidden">
+            <div class="flex items-center justify-between border-b border-slate-700/80 bg-slate-800/50 px-6 py-4">
+                <h3 class="font-semibold text-slate-200">{{ __('Recent documentation') }}</h3>
+                <a href="{{ route('documents.index') }}" class="text-sm font-medium text-indigo-400 hover:text-indigo-300 transition">
+                    {{ __('View all') }}
                 </a>
-
-                @if(Auth::user()->isGlobalAdmin())
-                    {{-- CATEGORIES --}}
-                    <a href="{{ route('categories.index') }}"
-                       class="group aspect-square flex flex-col items-center justify-center gap-3 rounded-2xl bg-slate-800/95 border border-slate-600/60 hover:border-amber-500/60 hover:bg-slate-700/50 transition-all">
-                        <span class="flex items-center justify-center w-16 h-16 rounded-xl bg-amber-600/80 text-white">
-                            <x-icon name="category" class="h-8 w-8" />
+            </div>
+            <div class="overflow-x-auto">
+                @if(($recentDocuments ?? collect())->isEmpty())
+                    <div class="flex flex-col items-center justify-center py-16 text-center">
+                        <span class="flex h-14 w-14 items-center justify-center rounded-xl bg-slate-700/50 text-slate-500 mb-4">
+                            <x-icon name="document" class="h-7 w-7" />
                         </span>
-                        <span class="text-base font-semibold text-white">{{ __('Categories') }}</span>
-                    </a>
-
-                    {{-- USERS --}}
-                    <a href="{{ route('admin.users.index') }}"
-                       class="group aspect-square flex flex-col items-center justify-center gap-3 rounded-2xl bg-slate-800/95 border border-slate-600/60 hover:border-emerald-500/60 hover:bg-slate-700/50 transition-all">
-                        <span class="flex items-center justify-center w-16 h-16 rounded-xl bg-emerald-600/80 text-white">
-                            <x-icon name="users" class="h-8 w-8" />
-                        </span>
-                        <span class="text-base font-semibold text-white">{{ __('Users') }}</span>
-                    </a>
+                        <p class="text-slate-400">{{ __('No documentation yet.') }}</p>
+                        <a href="{{ route('documents.create') }}" class="mt-3 text-sm font-medium text-indigo-400 hover:text-indigo-300">
+                            {{ __('Create first entry') }}
+                        </a>
+                    </div>
+                @else
+                    <table class="min-w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-slate-700/80 bg-slate-800/30">
+                                <th class="px-6 py-3 text-left font-semibold text-slate-400 uppercase tracking-widest text-xs">{{ __('Title') }}</th>
+                                <th class="px-6 py-3 text-left font-semibold text-slate-400 uppercase tracking-widest text-xs">{{ __('Company') }}</th>
+                                <th class="px-6 py-3 text-left font-semibold text-slate-400 uppercase tracking-widest text-xs">{{ __('Category') }}</th>
+                                <th class="px-6 py-3 text-left font-semibold text-slate-400 uppercase tracking-widest text-xs">{{ __('Status') }}</th>
+                                <th class="px-6 py-3 text-left font-semibold text-slate-400 uppercase tracking-widest text-xs">{{ __('Updated') }}</th>
+                                <th class="px-6 py-3 w-10"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($recentDocuments as $doc)
+                                <tr class="border-b border-slate-700/50 hover:bg-slate-700/40 transition">
+                                    <td class="px-6 py-3">
+                                        <a href="{{ route('documents.show', $doc) }}" class="font-medium text-indigo-400 hover:text-indigo-300">
+                                            {{ $doc->title }}
+                                        </a>
+                                    </td>
+                                    <td class="px-6 py-3 text-slate-400">
+                                        @if($doc->company)
+                                            <a href="{{ route('companies.show', $doc->company) }}" class="hover:text-white transition">
+                                                {{ $doc->company->name }}
+                                            </a>
+                                        @else
+                                            —
+                                        @endif
+                                    </td>
+                                    <td class="px-6 py-3 text-slate-400">{{ $doc->category?->name ?? '—' }}</td>
+                                    <td class="px-6 py-3">
+                                        <span @class([
+                                            'inline-flex px-2.5 py-1 rounded-lg text-xs font-medium',
+                                            'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' => $doc->status === 'published',
+                                            'bg-amber-500/20 text-amber-400 border border-amber-500/40' => $doc->status === 'draft',
+                                        ])>
+                                            {{ ucfirst($doc->status) }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-3 text-slate-500 text-xs">{{ $doc->updated_at?->diffForHumans() }}</td>
+                                    <td class="px-6 py-3">
+                                        <a href="{{ route('documents.edit', $doc) }}" class="text-slate-400 hover:text-indigo-400">
+                                            <x-icon name="pencil" class="h-4 w-4" />
+                                        </a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
                 @endif
-
-                {{-- PROFILE --}}
-                <a href="{{ route('profile.edit') }}"
-                   class="group aspect-square flex flex-col items-center justify-center gap-3 rounded-2xl bg-slate-800/95 border border-slate-600/60 hover:border-slate-500 hover:bg-slate-700/50 transition-all">
-                    <span class="flex items-center justify-center w-16 h-16 rounded-xl bg-slate-600/80 text-white">
-                        <x-icon name="user" class="h-8 w-8" />
-                    </span>
-                    <span class="text-base font-semibold text-white">{{ __('Profile') }}</span>
-                </a>
             </div>
         </div>
     </div>

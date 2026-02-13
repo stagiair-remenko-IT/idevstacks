@@ -10,6 +10,12 @@
                         {{ $document->title }}
                     </h2>
                     <div class="flex flex-wrap items-center gap-2 mt-1 text-sm text-slate-300">
+                        @if($document->company)
+                            <a href="{{ route('companies.show', $document->company) }}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-700/50 text-slate-400 border border-slate-600/50 hover:text-white hover:border-slate-500 transition">
+                                <x-icon name="building" class="h-3.5 w-3.5" />
+                                {{ $document->company->name }}
+                            </a>
+                        @endif
                         @if($document->category)
                             <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-700/50 text-slate-400 border border-slate-600/50">
                                 <x-icon name="folder" class="h-3.5 w-3.5" />
@@ -22,8 +28,8 @@
                         @endif
                         <span @class([
                             'inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium',
-                            'bg-emerald-500/20 text-emerald-700 border border-emerald-500/30' => $document->status === 'published',
-                            'bg-amber-500/20 text-amber-700 border border-amber-500/30' => $document->status === 'draft',
+                            'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40' => $document->status === 'published',
+                            'bg-amber-500/20 text-amber-400 border border-amber-500/40' => $document->status === 'draft',
                         ])>
                             @if($document->status === 'published')
                                 <x-icon name="check" class="h-3.5 w-3.5" />
@@ -33,7 +39,7 @@
                             {{ ucfirst($document->status) }}
                         </span>
                         @if($document->is_pinned)
-                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-indigo-500/20 text-indigo-700 border border-indigo-500/30">
+                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-indigo-500/20 text-indigo-400 border border-indigo-500/40">
                                 <x-icon name="pin" class="h-3.5 w-3.5" />
                                 {{ __('Pinned') }}
                             </span>
@@ -59,9 +65,9 @@
 
     <div class="py-8">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="rounded-2xl bg-slate-800/95 border border-slate-600/60 shadow-lg overflow-hidden">
+            <div class="rounded-2xl bg-slate-800/80 border border-slate-700/80 shadow-xl overflow-hidden backdrop-blur-sm">
                 {{-- Meta bar --}}
-                <div class="p-5 border-b border-slate-600/50 bg-slate-800/80">
+                <div class="p-5 border-b border-slate-700/80 bg-slate-800/50">
                     <p class="text-xs text-slate-400 flex flex-wrap items-center gap-x-3 gap-y-1">
                         <span class="inline-flex items-center gap-1.5">
                             <x-icon name="user" class="h-3.5 w-3.5" />
@@ -109,7 +115,7 @@
                                     @endphp
 
                                     @if($value !== null && $value !== '')
-                                        <div class="p-3 rounded-xl bg-slate-700/30 border border-slate-600/40">
+                                        <div class="p-4 rounded-xl bg-slate-700/40 border border-slate-600/50 hover:border-slate-500/50 transition">
                                             <dt class="flex items-center gap-2 text-slate-400 text-xs font-medium uppercase tracking-wider">
                                                 <x-icon :name="$iconName" class="h-3.5 w-3.5 shrink-0" />
                                                 {{ $field->label }}

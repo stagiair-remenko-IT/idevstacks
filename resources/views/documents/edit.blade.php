@@ -1,34 +1,45 @@
 <x-app-layout>
     <x-slot name="header">
-        <div class="flex items-center gap-3">
-            <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-600/80 text-amber-300 border border-slate-500/60">
-                <x-icon name="pencil" class="h-5 w-5" />
+        <div class="flex items-center gap-4">
+            <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-amber-500/20 text-amber-400 border border-amber-500/30 shadow-lg">
+                <x-icon name="pencil" class="h-6 w-6" />
             </span>
             <div>
-                <h2 class="font-semibold text-xl text-white leading-tight">
+                <h2 class="font-bold text-2xl text-white leading-tight tracking-tight">
                     {{ __('Edit entry') }}
                 </h2>
-                <p class="mt-0.5 text-sm text-slate-300">
+                <p class="mt-1 text-sm text-slate-400 truncate">
                     {{ $document->title }}
                 </p>
             </div>
         </div>
     </x-slot>
 
-    <div class="py-8">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
-            <div class="rounded-2xl bg-slate-800/95 border border-slate-600/60 shadow-lg overflow-hidden" x-data="{ selectedCategoryId: '{{ old('category_id', $document->category_id) }}' }">
+    <div class="max-w-4xl">
+            <div class="rounded-2xl bg-slate-800/80 border border-slate-700/80 shadow-xl overflow-hidden backdrop-blur-sm" x-data="{ selectedCategoryId: '{{ old('category_id', $document->category_id) }}' }">
                 <div class="p-6 sm:p-8">
                     <form method="POST" action="{{ route('documents.update', $document) }}" class="space-y-6">
                         @csrf
                         @method('PUT')
 
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
                                 <x-input-label for="title" value="{{ __('Title') }}" class="text-slate-400" />
                                 <x-text-input id="title" name="title" type="text" class="mt-1 block w-full bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500"
                                               :value="old('title', $document->title)" required autofocus />
                                 <x-input-error :messages="$errors->get('title')" class="mt-1" />
+                            </div>
+                            <div>
+                                <x-input-label for="company_id" value="{{ __('Company') }}" class="text-slate-400" />
+                                <select id="company_id" name="company_id"
+                                        class="mt-1 block w-full rounded-lg bg-slate-700/50 border-slate-600 text-white focus:border-indigo-500 focus:ring-indigo-500">
+                                    <option value="">{{ __('No company') }}</option>
+                                    @foreach($companies ?? [] as $company)
+                                        <option value="{{ $company->id }}" @selected(old('company_id', $document->company_id) == $company->id)>
+                                            {{ $company->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div>
                                 <x-input-label for="category_id" value="{{ __('Category / Section') }}" class="text-slate-400" />
@@ -103,6 +114,5 @@
                     @endcan
                 </div>
             </div>
-        </div>
     </div>
 </x-app-layout>

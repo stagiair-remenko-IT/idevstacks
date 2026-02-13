@@ -16,6 +16,7 @@ class Document extends Model
      * @var list<string>
      */
     protected $fillable = [
+        'company_id',
         'category_id',
         'title',
         'slug',
@@ -38,6 +39,14 @@ class Document extends Model
             'meta' => 'encrypted:array',
             'is_pinned' => 'bool',
         ];
+    }
+
+    /**
+     * @return BelongsTo<Company, Document>
+     */
+    public function company(): BelongsTo
+    {
+        return $this->belongsTo(Company::class);
     }
 
     /**

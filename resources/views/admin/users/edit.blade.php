@@ -17,7 +17,7 @@
 
     <div class="py-8">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="rounded-2xl bg-slate-800/95 border border-slate-600/60 shadow-lg overflow-hidden">
+            <div class="rounded-2xl bg-slate-800/80 border border-slate-700/80 shadow-xl overflow-hidden backdrop-blur-sm">
                 <div class="p-6 sm:p-8">
                     <form method="POST" action="{{ route('admin.users.update', $user) }}" class="space-y-6">
                         @csrf

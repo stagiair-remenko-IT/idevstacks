@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreDocumentRequest;
 use App\Http\Requests\UpdateDocumentRequest;
 use App\Models\Category;
+use App\Models\Company;
 use App\Models\Document;
 use App\Models\DocumentRevision;
 use Illuminate\Http\RedirectResponse;
@@ -19,13 +20,18 @@ class DocumentController extends Controller
         $this->authorize('viewAny', Document::class);
 
         $query = Document::query()
-            ->with(['category', 'creator'])
+            ->with(['company', 'category', 'creator'])
             ->orderByDesc('is_pinned')
             ->orderByDesc('updated_at');
 
         $search = $request->string('search')->toString();
+        $companyId = $request->integer('company_id') ?: null;
         $categoryId = $request->integer('category_id') ?: null;
         $status = $request->string('status')->toString();
+
+        if ($companyId !== null) {
+            $query->where('company_id', $companyId);
+        }
 
         if ($search !== '') {
             $query->where(function ($q) use ($search): void {
@@ -51,9 +57,11 @@ class DocumentController extends Controller
 
         return view('documents.index', [
             'documents' => $query->paginate(15)->withQueryString(),
+            'companies' => Company::orderBy('name')->get(),
             'categories' => Category::orderBy('name')->get(),
             'filters' => [
                 'search' => $search,
+                'company_id' => $companyId,
                 'category_id' => $categoryId,
                 'status' => $status,
             ],
@@ -64,10 +72,14 @@ class DocumentController extends Controller
     {
         $this->authorize('create', Document::class);
 
+        $companies = Company::orderBy('name')->get();
         $categories = Category::with('fields')->orderBy('name')->get();
+        $selectedCompanyId = $request->integer('company_id') ?: null;
 
         return view('documents.create', [
+            'companies' => $companies,
             'categories' => $categories,
+            'selectedCompanyId' => $selectedCompanyId,
         ]);
     }
 
@@ -81,6 +93,7 @@ class DocumentController extends Controller
 
         $data['created_by'] = $request->user()->id;
         $data['updated_by'] = $request->user()->id;
+        $data['company_id'] = $data['company_id'] ?? null;
 
         $meta = $data['meta'] ?? [];
         unset($data['meta']);
@@ -99,7 +112,7 @@ class DocumentController extends Controller
     {
         $this->authorize('view', $document);
 
-        $document->load(['category.fields', 'creator', 'updater']);
+        $document->load(['company', 'category.fields', 'creator', 'updater']);
 
         return view('documents.show', [
             'document' => $document,
@@ -111,11 +124,13 @@ class DocumentController extends Controller
     {
         $this->authorize('update', $document);
 
+        $companies = Company::orderBy('name')->get();
         $categories = Category::with('fields')->orderBy('name')->get();
         $document->load('category.fields');
 
         return view('documents.edit', [
             'document' => $document,
+            'companies' => $companies,
             'categories' => $categories,
         ]);
     }
@@ -157,9 +172,19 @@ class DocumentController extends Controller
 
         $document->delete();
 
+        $company = $document->company;
+
+        $document->delete();
+
+        if ($company) {
+            return redirect()
+                ->route('companies.show', $company)
+                ->with('status', __('Document deleted.'));
+        }
+
         return redirect()
             ->route('documents.index')
-            ->with('status', 'Document deleted.');
+            ->with('status', __('Document deleted.'));
     }
 }
 

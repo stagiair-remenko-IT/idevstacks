@@ -26,6 +26,7 @@ class UpdateDocumentRequest extends FormRequest
         $document = $this->route('document');
 
         return [
+            'company_id' => ['nullable', 'exists:companies,id'],
             'category_id' => ['nullable', 'exists:categories,id'],
             'title' => ['required', 'string', 'max:255'],
             'slug' => [

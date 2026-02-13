@@ -17,7 +17,7 @@
 
     <div class="py-8">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="rounded-2xl bg-slate-800/95 border border-slate-600/60 shadow-lg overflow-hidden">
+            <div class="rounded-2xl bg-slate-800/80 border border-slate-700/80 shadow-xl overflow-hidden backdrop-blur-sm">
                 <div class="p-6 sm:p-8">
                     <form id="category-update-form" method="POST" action="{{ route('categories.update', $category) }}" class="space-y-6">
                         @csrf
@@ -73,7 +73,7 @@
             </div>
 
             {{-- Custom fields section --}}
-            <div class="rounded-2xl bg-slate-800/95 border border-slate-600/60 shadow-lg overflow-hidden">
+            <div class="rounded-2xl bg-slate-800/80 border border-slate-700/80 shadow-xl overflow-hidden backdrop-blur-sm">
                 <div class="p-6 border-b border-slate-600/50">
                     <h3 class="text-sm font-semibold text-slate-300">
                         {{ __('Custom fields for this category') }}

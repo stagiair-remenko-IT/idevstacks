@@ -1,10 +1,10 @@
-<nav x-data="{ open: false }" class="bg-slate-800 border-b border-slate-700/80 shadow-lg">
+<nav x-data="{ open: false }" class="bg-slate-800/95 border-b border-slate-700/80 shadow-xl backdrop-blur-sm">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between h-14">
             <div class="flex items-center">
                 <a href="{{ route('dashboard') }}" class="flex items-center gap-2 no-underline text-white hover:text-slate-200 transition-colors">
                     <span class="font-bold text-lg tracking-tight text-white">IDEVSTACKS</span>
-                    <span class="hidden sm:inline text-xs font-medium text-slate-400 uppercase tracking-wider">{{ __('IT Docs') }}</span>
+                    <span class="hidden sm:inline text-xs font-medium text-slate-400 uppercase tracking-widest">{{ __('IT Docs') }}</span>
                 </a>
 
                 <div class="hidden space-x-0.5 sm:-my-px sm:ml-8 sm:flex">
@@ -33,7 +33,7 @@
 
             <div class="hidden sm:flex sm:items-center sm:ms-6 space-x-3">
                 @if(Auth::user()?->isGlobalAdmin())
-                    <a href="{{ route('admin.users.index') }}" class="inline-flex items-center gap-2 text-sm text-slate-300 hover:text-white font-medium px-3 py-2 rounded-md hover:bg-slate-700/50 transition">
+                    <a href="{{ route('admin.users.index') }}" class="inline-flex items-center gap-2 text-sm text-slate-300 hover:text-white font-medium px-3 py-2 rounded-lg hover:bg-slate-700/50 transition">
                         <x-icon name="users" class="h-4 w-4 shrink-0" />
                         {{ __('Users') }}
                     </a>
@@ -41,7 +41,7 @@
 
                 <x-dropdown align="right" width="48" contentClasses="py-1 bg-slate-800 border border-slate-700 shadow-xl">
                     <x-slot name="trigger">
-                        <button class="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-md text-slate-200 bg-slate-700/50 hover:bg-slate-700 hover:text-white border border-slate-600/50 focus:outline-none transition">
+                        <button class="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium rounded-lg text-slate-200 bg-slate-700/50 hover:bg-slate-600/80 hover:text-white border border-slate-600/50 focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition">
                             <span class="flex items-center justify-center w-7 h-7 rounded-md bg-indigo-500/80 text-white text-xs font-semibold">
                                 {{ strtoupper(substr(Auth::user()->name, 0, 1)) }}
                             </span>
