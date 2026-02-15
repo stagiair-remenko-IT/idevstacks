@@ -40,6 +40,16 @@
                         {{ __('Users') }}
                     </a>
                 @endif
+                <div class="mt-4 pt-4 border-t border-white/10 space-y-1">
+                    <a href="{{ route('settings.index') }}" class="flex items-center gap-3 glass-nav-hover px-3 py-2.5 text-slate-300 hover:text-white">
+                        <x-icon name="cog" class="h-5 w-5" />
+                        {{ __('Settings') }}
+                    </a>
+                    <a href="{{ route('profile.edit') }}" class="flex items-center gap-3 glass-nav-hover px-3 py-2.5 text-slate-300 hover:text-white">
+                        <x-icon name="user" class="h-5 w-5" />
+                        {{ __('Profile') }}
+                    </a>
+                </div>
             </nav>
         </div>
     </div>

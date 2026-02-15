@@ -6,6 +6,7 @@
         $companiesCount = 0;
         $documentsCount = 0;
     }
+    $showSidebarCounts = Auth::user()?->getPreference(\App\Models\User::PREF_SIDEBAR_COUNTS, true) ?? true;
 @endphp
 <aside class="fixed left-0 top-0 z-40 h-screen w-64 flex-shrink-0 glass-blade shadow-2xl">
     <div class="flex h-full flex-col">
@@ -31,7 +32,7 @@
                         <x-icon name="building" class="h-5 w-5 shrink-0" />
                         {{ __('Companies') }}
                     </span>
-                    <span class="glass-badge text-slate-300">{{ $companiesCount }}</span>
+                    @if($showSidebarCounts)<span class="glass-badge text-slate-300">{{ $companiesCount }}</span>@endif
                 </a>
                 <a href="{{ route('documents.index') }}"
                    class="@if(request()->routeIs('documents.*') && !request()->routeIs('companies.*')) glass-nav-active text-white @else text-slate-300 glass-nav-hover hover:text-white @endif flex items-center justify-between gap-3 px-3 py-2.5 text-sm font-medium">
@@ -39,7 +40,7 @@
                         <x-icon name="document" class="h-5 w-5 shrink-0" />
                         {{ __('Documentation') }}
                     </span>
-                    <span class="glass-badge text-slate-300">{{ $documentsCount }}</span>
+                    @if($showSidebarCounts)<span class="glass-badge text-slate-300">{{ $documentsCount }}</span>@endif
                 </a>
             </div>
 
@@ -62,10 +63,15 @@
             @endif
         </nav>
 
-        <div class="border-t border-white/10 p-3">
-            <a href="{{ route('profile.edit') }}"
-               class="flex items-center gap-3 glass-nav-hover px-3 py-2.5 text-sm text-slate-400 hover:text-white">
+        <div class="border-t border-white/10 p-3 space-y-0.5">
+            <a href="{{ route('settings.index') }}"
+               class="@if(request()->routeIs('settings.*')) glass-nav-active text-white @else text-slate-400 glass-nav-hover hover:text-white @endif flex items-center gap-3 px-3 py-2.5 text-sm font-medium">
                 <x-icon name="cog" class="h-5 w-5 shrink-0" />
+                {{ __('Settings') }}
+            </a>
+            <a href="{{ route('profile.edit') }}"
+               class="@if(request()->routeIs('profile.*')) glass-nav-active text-white @else text-slate-400 glass-nav-hover hover:text-white @endif flex items-center gap-3 px-3 py-2.5 text-sm font-medium">
+                <x-icon name="user" class="h-5 w-5 shrink-0" />
                 {{ __('Profile') }}
             </a>
         </div>

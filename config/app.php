@@ -15,6 +15,8 @@ return [
 
     'name' => env('APP_NAME', 'IDEV STACKS'),
 
+    'version' => env('APP_VERSION', 'v0.5.0-beta'),
+
     /*
     |--------------------------------------------------------------------------
     | Application Environment

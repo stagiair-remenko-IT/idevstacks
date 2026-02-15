@@ -26,6 +26,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+        'preferences',
     ];
 
     /**
@@ -48,7 +49,29 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'preferences' => 'array',
         ];
+    }
+
+    public const PREF_ITEMS_PER_PAGE = 'items_per_page';
+
+    public const PREF_RECENT_COUNT = 'recent_count';
+
+    public const PREF_COMPACT_MODE = 'compact_mode';
+
+    public const PREF_SIDEBAR_COUNTS = 'sidebar_counts';
+
+    public function getPreference(string $key, mixed $default = null): mixed
+    {
+        return data_get($this->preferences ?? [], $key, $default);
+    }
+
+    public function setPreference(string $key, mixed $value): void
+    {
+        $prefs = $this->preferences ?? [];
+        data_set($prefs, $key, $value);
+        $this->preferences = $prefs;
+        $this->save();
     }
 
     public function isGlobalAdmin(): bool

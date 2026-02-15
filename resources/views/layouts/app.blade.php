@@ -14,7 +14,7 @@
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
-    <body class="font-sans antialiased text-slate-200" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.5) 0%, rgba(2, 6, 23, 0.6) 50%, rgba(15, 23, 42, 0.7) 100%), url('{{ asset('images/glass-blade-bg.png') }}') center center / cover no-repeat fixed; min-height: 100vh; background-color: #020617;">
+    <body class="font-sans antialiased text-slate-200 @if(Auth::check() && Auth::user()->getPreference(\App\Models\User::PREF_COMPACT_MODE, false)) app-compact @endif" style="background: linear-gradient(180deg, rgba(15, 23, 42, 0.5) 0%, rgba(2, 6, 23, 0.6) 50%, rgba(15, 23, 42, 0.7) 100%), url('{{ asset('images/glass-blade-bg.png') }}') center center / cover no-repeat fixed; min-height: 100vh; background-color: #020617;">
         <div class="min-h-screen flex">
             {{-- Sidebar (desktop) --}}
             <div class="hidden lg:block">
@@ -47,9 +47,15 @@
                             </button>
                         </x-slot>
                         <x-slot name="content">
-                            <x-dropdown-link :href="route('profile.edit')" class="text-slate-200 hover:bg-white/10 hover:text-white">
+                            <x-dropdown-link :href="route('settings.index')" class="text-slate-200 hover:bg-white/10 hover:text-white">
                                 <span class="inline-flex items-center gap-2">
                                     <x-icon name="cog" class="h-4 w-4 shrink-0" />
+                                    {{ __('Settings') }}
+                                </span>
+                            </x-dropdown-link>
+                            <x-dropdown-link :href="route('profile.edit')" class="text-slate-200 hover:bg-white/10 hover:text-white">
+                                <span class="inline-flex items-center gap-2">
+                                    <x-icon name="user" class="h-4 w-4 shrink-0" />
                                     {{ __('Profile') }}
                                 </span>
                             </x-dropdown-link>

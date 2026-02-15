@@ -55,8 +55,11 @@ class DocumentController extends Controller
             });
         }
 
+        $perPage = $request->user()->getPreference(\App\Models\User::PREF_ITEMS_PER_PAGE, 15);
+        $perPage = in_array($perPage, [15, 25, 50, 100], true) ? $perPage : 15;
+
         return view('documents.index', [
-            'documents' => $query->paginate(15)->withQueryString(),
+            'documents' => $query->paginate($perPage)->withQueryString(),
             'companies' => Company::orderBy('name')->get(),
             'categories' => Category::orderBy('name')->get(),
             'filters' => [

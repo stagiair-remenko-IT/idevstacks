@@ -16,10 +16,13 @@ class DashboardController extends Controller
         $draftCount = Document::where('status', 'draft')->count();
         $pinnedCount = Document::where('is_pinned', true)->count();
 
+        $recentCount = auth()->user()->getPreference(\App\Models\User::PREF_RECENT_COUNT, 10);
+        $recentCount = in_array($recentCount, [5, 10, 15, 20], true) ? $recentCount : 10;
+
         $recentDocuments = Document::query()
             ->with(['company', 'category', 'creator'])
             ->orderByDesc('updated_at')
-            ->limit(10)
+            ->limit($recentCount)
             ->get();
 
         return view('dashboard', [
