@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <div class="flex items-center gap-3">
-            <span class="flex items-center justify-center w-10 h-10 rounded-xl bg-slate-600/80 border border-slate-500/60 text-indigo-300">
+            <span class="flex items-center justify-center w-10 h-10 glass-icon text-indigo-300">
                 <x-icon :name="\App\Helpers\FieldIcon::forCategory($category)" class="h-5 w-5" />
             </span>
             <div>
@@ -17,7 +17,7 @@
 
     <div class="py-8">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="rounded-2xl bg-slate-800/80 border border-slate-700/80 shadow-xl overflow-hidden backdrop-blur-sm">
+            <div class="glass-card overflow-hidden">
                 <div class="p-6 sm:p-8">
                     <form id="category-update-form" method="POST" action="{{ route('categories.update', $category) }}" class="space-y-6">
                         @csrf
@@ -26,13 +26,13 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <x-input-label for="name" value="{{ __('Name') }}" class="text-slate-400" />
-                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500"
+                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
                                               :value="old('name', $category->name)" required autofocus />
                                 <x-input-error :messages="$errors->get('name')" class="mt-1" />
                             </div>
                             <div>
                                 <x-input-label for="slug" value="{{ __('Slug (URL key)') }}" class="text-slate-400" />
-                                <x-text-input id="slug" name="slug" type="text" class="mt-1 block w-full bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500"
+                                <x-text-input id="slug" name="slug" type="text" class="mt-1 block w-full"
                                               :value="old('slug', $category->slug)" required />
                                 <x-input-error :messages="$errors->get('slug')" class="mt-1" />
                             </div>
@@ -43,7 +43,7 @@
                         <div>
                             <x-input-label for="description" value="{{ __('Description') }}" class="text-slate-400" />
                             <textarea id="description" name="description" rows="4"
-                                      class="mt-1 block w-full rounded-lg bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500">{{ old('description', $category->description) }}</textarea>
+                                      class="mt-1 block w-full glass-input">{{ old('description', $category->description) }}</textarea>
                             <x-input-error :messages="$errors->get('description')" class="mt-1" />
                         </div>
 
@@ -55,7 +55,7 @@
                         </a>
                         <div class="flex items-center gap-3">
                             <button type="submit" form="category-update-form"
-                                    class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition">
+                                    class="inline-flex items-center gap-2 glass-button px-5 py-2.5 text-white text-sm font-semibold">
                                 {{ __('Save changes') }}
                             </button>
                             <form method="POST" action="{{ route('categories.destroy', $category) }}" class="inline"
@@ -73,8 +73,8 @@
             </div>
 
             {{-- Custom fields section --}}
-            <div class="rounded-2xl bg-slate-800/80 border border-slate-700/80 shadow-xl overflow-hidden backdrop-blur-sm">
-                <div class="p-6 border-b border-slate-600/50">
+            <div class="glass-card overflow-hidden">
+                <div class="p-6 border-b border-white/10">
                     <h3 class="text-sm font-semibold text-slate-300">
                         {{ __('Custom fields for this category') }}
                     </h3>
@@ -84,7 +84,7 @@
                 </div>
                 <div class="p-6">
                     {{-- Add new field --}}
-                    <div class="mb-6 p-5 rounded-xl bg-slate-700/30 border border-slate-600/50">
+                    <div class="mb-6 p-5 rounded-xl glass-button-ghost">
                         <h4 class="text-sm font-semibold text-slate-300 mb-3">
                             {{ __('Add new field') }}
                         </h4>
@@ -92,17 +92,17 @@
                             @csrf
                             <div>
                                 <x-input-label for="key" value="{{ __('Key (machine name)') }}" class="text-slate-400" />
-                                <x-text-input id="key" name="key" type="text" class="mt-1 block w-full bg-slate-700/50 border-slate-600 text-white placeholder-slate-500" :value="old('key')" required placeholder="e.g. ip_address" />
+                                <x-text-input id="key" name="key" type="text" class="mt-1 block w-full" :value="old('key')" required placeholder="e.g. ip_address" />
                                 <x-input-error :messages="$errors->get('key')" class="mt-1" />
                             </div>
                             <div>
                                 <x-input-label for="label" value="{{ __('Label (shown to user)') }}" class="text-slate-400" />
-                                <x-text-input id="label" name="label" type="text" class="mt-1 block w-full bg-slate-700/50 border-slate-600 text-white placeholder-slate-500" :value="old('label')" required placeholder="e.g. IP Address" />
+                                <x-text-input id="label" name="label" type="text" class="mt-1 block w-full" :value="old('label')" required placeholder="e.g. IP Address" />
                                 <x-input-error :messages="$errors->get('label')" class="mt-1" />
                             </div>
                             <div>
                                 <x-input-label for="field_type" value="{{ __('Data type') }}" class="text-slate-400" />
-                                <select id="field_type" name="field_type" class="mt-1 block w-full rounded-lg bg-slate-700/50 border-slate-600 text-white focus:border-indigo-500 focus:ring-indigo-500">
+                                <select id="field_type" name="field_type" class="mt-1 block w-full glass-input">
                                     <option value="text">{{ __('Text') }}</option>
                                     <option value="textarea">{{ __('Textarea (multi-line)') }}</option>
                                     <option value="password">{{ __('Password / secret') }}</option>
@@ -113,16 +113,16 @@
                             </div>
                             <div class="flex flex-wrap items-center gap-4">
                                 <label class="inline-flex items-center">
-                                    <input id="is_required" name="is_required" type="checkbox" value="1" class="rounded border-slate-600 bg-slate-700 text-indigo-500 focus:ring-indigo-500">
+                                    <input id="is_required" name="is_required" type="checkbox" value="1" class="rounded border-white/20 bg-white/10 text-indigo-500 focus:ring-indigo-500">
                                     <span class="ms-2 text-xs text-slate-400">{{ __('Required') }}</span>
                                 </label>
                                 <label class="inline-flex items-center">
-                                    <input id="is_sensitive" name="is_sensitive" type="checkbox" value="1" class="rounded border-slate-600 bg-slate-700 text-indigo-500 focus:ring-indigo-500">
+                                    <input id="is_sensitive" name="is_sensitive" type="checkbox" value="1" class="rounded border-white/20 bg-white/10 text-indigo-500 focus:ring-indigo-500">
                                     <span class="ms-2 text-xs text-slate-400">{{ __('Sensitive') }}</span>
                                 </label>
                                 <div class="flex items-center gap-1">
                                     <x-input-label for="sort_order" value="{{ __('Order') }}" class="sr-only" />
-                                    <x-text-input id="sort_order" name="sort_order" type="number" min="0" class="w-20 bg-slate-700/50 border-slate-600 text-white" :value="old('sort_order', 0)" />
+                                    <x-text-input id="sort_order" name="sort_order" type="number" min="0" class="w-20" :value="old('sort_order', 0)" />
                                 </div>
                                 <button type="submit" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition">
                                     {{ __('Add field') }}
@@ -130,7 +130,7 @@
                             </div>
                             <div class="md:col-span-4">
                                 <x-input-label for="help_text" value="{{ __('Help text (optional)') }}" class="text-slate-400" />
-                                <textarea id="help_text" name="help_text" rows="2" class="mt-1 block w-full rounded-lg bg-slate-700/50 border-slate-600 text-white placeholder-slate-500" placeholder="{{ __('e.g. Printer IP on the internal network') }}">{{ old('help_text') }}</textarea>
+                                <textarea id="help_text" name="help_text" rows="2" class="mt-1 block w-full glass-input" placeholder="{{ __('e.g. Printer IP on the internal network') }}">{{ old('help_text') }}</textarea>
                             </div>
                         </form>
                     </div>
@@ -140,7 +140,7 @@
                     </h4>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         @forelse($category->fields->sortBy('sort_order') as $field)
-                            <div class="rounded-xl border border-slate-600/50 bg-slate-700/30 p-4 text-sm flex flex-col justify-between">
+                            <div class="rounded-xl glass-button-ghost p-4 text-sm flex flex-col justify-between">
                                 <div>
                                     <p class="font-medium text-white">
                                         {{ $field->label }}

@@ -5,7 +5,7 @@
     $meta = $document?->meta ?? [];
 @endphp
 
-<div class="border-t border-slate-600/50 pt-6 mt-6">
+<div class="border-t border-white/10 pt-6 mt-6">
     <h3 class="flex items-center gap-2 text-sm font-semibold text-slate-300 mb-3">
         <x-icon name="key" class="h-4 w-4 text-indigo-400" />
         {{ __('Structured details') }}
@@ -37,7 +37,7 @@
                         @if($field->field_type === 'textarea')
                             <textarea id="{{ $inputId }}"
                                       name="meta[{{ $field->key }}]"
-                                      class="mt-1 block w-full rounded-lg bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500"
+                                      class="mt-1 block w-full glass-input"
                                       rows="3"
                                       x-bind:disabled="selectedCategoryId !== '{{ $category->id }}'">{{ $value }}</textarea>
                         @else
@@ -57,12 +57,12 @@
                                            id="{{ $inputId }}"
                                            name="meta[{{ $field->key }}]"
                                            value="{{ $value }}"
-                                           class="mt-1 block w-full rounded-lg bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500 pr-10"
+                                           class="mt-1 block w-full glass-input pr-10"
                                            x-bind:type="showValue ? 'text' : 'password'"
                                            x-bind:disabled="selectedCategoryId !== '{{ $category->id }}'">
                                     <button type="button"
                                             @click="showValue = !showValue"
-                                            class="absolute right-2 bottom-1.5 p-1.5 rounded-lg text-slate-400 hover:text-indigo-400 hover:bg-slate-600/50 transition"
+                                            class="absolute right-2 bottom-1.5 p-1.5 rounded-lg text-slate-400 hover:text-indigo-400 glass-nav-hover transition"
                                             :title="showValue ? '{{ __('Hide') }}' : '{{ __('Reveal') }}'">
                                         <span x-show="!showValue"><x-icon name="eye" class="h-4 w-4" /></span>
                                         <span x-show="showValue" x-cloak><x-icon name="eye-slash" class="h-4 w-4" /></span>
@@ -73,7 +73,7 @@
                                        id="{{ $inputId }}"
                                        name="meta[{{ $field->key }}]"
                                        value="{{ $value }}"
-                                       class="mt-1 block w-full rounded-lg bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500"
+                                       class="mt-1 block w-full glass-input"
                                        x-bind:disabled="selectedCategoryId !== '{{ $category->id }}'">
                             @endif
                         @endif

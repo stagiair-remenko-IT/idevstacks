@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-start justify-between gap-4">
             <div class="flex items-center gap-3 min-w-0">
-                <span class="flex items-center justify-center w-11 h-11 shrink-0 rounded-xl bg-slate-600/80 border border-slate-500/60 text-indigo-300">
+                <span class="flex items-center justify-center w-11 h-11 shrink-0 glass-icon text-indigo-300">
                     <x-icon :name="\App\Helpers\FieldIcon::forCategory($document->category)" class="h-5 w-5" />
                 </span>
                 <div class="min-w-0">
@@ -11,18 +11,18 @@
                     </h2>
                     <div class="flex flex-wrap items-center gap-2 mt-1 text-sm text-slate-300">
                         @if($document->company)
-                            <a href="{{ route('companies.show', $document->company) }}" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-700/50 text-slate-400 border border-slate-600/50 hover:text-white hover:border-slate-500 transition">
+                            <a href="{{ route('companies.show', $document->company) }}" class="inline-flex items-center gap-1 glass-badge text-slate-400 hover:text-white transition">
                                 <x-icon name="building" class="h-3.5 w-3.5" />
                                 {{ $document->company->name }}
                             </a>
                         @endif
                         @if($document->category)
-                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-700/50 text-slate-400 border border-slate-600/50">
+                            <span class="inline-flex items-center gap-1 glass-badge text-slate-400">
                                 <x-icon name="folder" class="h-3.5 w-3.5" />
                                 {{ $document->category->name }}
                             </span>
                         @else
-                            <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-slate-700/50 text-slate-500 border border-slate-600/50">
+                            <span class="inline-flex items-center gap-1 glass-badge text-slate-500">
                                 {{ __('Uncategorized') }}
                             </span>
                         @endif
@@ -65,7 +65,7 @@
 
     <div class="py-8">
         <div class="max-w-5xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="rounded-2xl bg-slate-800/80 border border-slate-700/80 shadow-xl overflow-hidden backdrop-blur-sm">
+            <div class="glass-card overflow-hidden">
                 {{-- Meta bar --}}
                 <div class="p-5 border-b border-slate-700/80 bg-slate-800/50">
                     <p class="text-xs text-slate-400 flex flex-wrap items-center gap-x-3 gap-y-1">
@@ -115,7 +115,7 @@
                                     @endphp
 
                                     @if($value !== null && $value !== '')
-                                        <div class="p-4 rounded-xl bg-slate-700/40 border border-slate-600/50 hover:border-slate-500/50 transition">
+                                        <div class="p-4 rounded-xl glass-button-ghost hover:border-white/20 transition">
                                             <dt class="flex items-center gap-2 text-slate-400 text-xs font-medium uppercase tracking-wider">
                                                 <x-icon :name="$iconName" class="h-3.5 w-3.5 shrink-0" />
                                                 {{ $field->label }}
@@ -123,11 +123,11 @@
                                             <dd class="mt-2 text-slate-200">
                                                 @if($field->field_type === 'password' || $field->is_sensitive)
                                                     <div x-data="{ revealed: false }" class="inline-flex items-center gap-2">
-                                                        <span x-show="!revealed" class="inline-flex items-center gap-1.5 font-mono text-xs bg-slate-700/80 rounded-lg px-2.5 py-1.5 text-slate-400">
+                                                        <span x-show="!revealed" class="inline-flex items-center gap-1.5 font-mono text-xs glass-badge text-slate-400">
                                                             <x-icon name="lock" class="h-3.5 w-3.5" />
                                                             ••••••
                                                         </span>
-                                                        <span x-show="revealed" x-cloak class="font-mono text-xs bg-slate-700/50 border border-slate-600/50 rounded-lg px-2.5 py-1.5 text-slate-200 break-all">
+                                                        <span x-show="revealed" x-cloak class="font-mono text-xs glass-badge text-slate-200 break-all">
                                                             {{ $value }}
                                                         </span>
                                                         <button type="button"
@@ -139,7 +139,7 @@
                                                         </button>
                                                     </div>
                                                 @else
-                                                    <span class="font-mono text-xs bg-slate-700/50 border border-slate-600/50 rounded-lg px-2.5 py-1.5 text-slate-200 break-all">
+                                                    <span class="font-mono text-xs glass-badge text-slate-200 break-all">
                                                         {{ $value }}
                                                     </span>
                                                 @endif

@@ -2,7 +2,7 @@
     <x-slot name="header">
         <div class="flex items-center justify-between gap-4">
             <div class="flex items-center gap-4">
-                <span class="flex h-12 w-12 items-center justify-center rounded-xl bg-indigo-500/20 text-indigo-400 border border-indigo-500/30 shadow-lg">
+                <span class="flex h-12 w-12 items-center justify-center glass-icon bg-indigo-500/20 text-indigo-400 border-indigo-500/40">
                     <x-icon name="building" class="h-6 w-6" />
                 </span>
                 <div>
@@ -16,7 +16,7 @@
             </div>
             @can('create', \App\Models\Company::class)
                 <a href="{{ route('companies.create') }}"
-                   class="inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-indigo-900/30 hover:bg-indigo-500 transition">
+                   class="inline-flex items-center gap-2 glass-button px-5 py-2.5 text-sm font-semibold text-white">
                     <x-icon name="plus" class="h-4 w-4" />
                     {{ __('New company') }}
                 </a>
@@ -24,16 +24,16 @@
         </div>
     </x-slot>
 
-    <div class="rounded-xl border border-slate-700/80 bg-slate-800/80 shadow-xl overflow-hidden">
+    <div class="glass-card overflow-hidden">
         @if($companies->isEmpty())
             <div class="flex flex-col items-center justify-center py-20 text-center">
-                <span class="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-700/50 text-slate-500 border border-slate-600/50 mb-5">
+                <span class="flex h-16 w-16 items-center justify-center glass-icon text-slate-500 mb-5">
                     <x-icon name="building" class="h-8 w-8" />
                 </span>
                 <p class="text-slate-400 text-base font-medium">{{ __('No companies yet.') }}</p>
                 <p class="text-slate-500 text-sm mt-1">{{ __('Create a company to organize documentation by client.') }}</p>
                 @can('create', \App\Models\Company::class)
-                    <a href="{{ route('companies.create') }}" class="mt-4 inline-flex items-center gap-2 rounded-lg bg-indigo-600 px-4 py-2 text-sm font-semibold text-white hover:bg-indigo-500">
+                    <a href="{{ route('companies.create') }}" class="mt-4 inline-flex items-center gap-2 glass-button px-4 py-2 text-sm font-semibold text-white">
                         <x-icon name="plus" class="h-4 w-4" />
                         {{ __('New company') }}
                     </a>
@@ -43,7 +43,7 @@
             <div class="overflow-x-auto">
                 <table class="min-w-full text-sm">
                     <thead>
-                        <tr class="border-b border-slate-700/80 bg-slate-800/30">
+                        <tr class="border-b border-white/10 bg-white/5">
                             <th class="px-6 py-4 text-left font-semibold text-slate-400 uppercase tracking-widest text-xs">{{ __('Name') }}</th>
                             <th class="px-6 py-4 text-left font-semibold text-slate-400 uppercase tracking-widest text-xs">{{ __('Email') }}</th>
                             <th class="px-6 py-4 text-left font-semibold text-slate-400 uppercase tracking-widest text-xs">{{ __('Entries') }}</th>
@@ -52,7 +52,7 @@
                     </thead>
                     <tbody>
                         @foreach($companies as $company)
-                            <tr class="border-b border-slate-700/50 hover:bg-slate-700/40 transition">
+                            <tr class="border-b border-white/5 hover:bg-white/5 transition">
                                 <td class="px-6 py-4">
                                     <a href="{{ route('companies.show', $company) }}" class="font-medium text-indigo-400 hover:text-indigo-300">
                                         {{ $company->name }}
@@ -63,7 +63,7 @@
                                 </td>
                                 <td class="px-6 py-4 text-slate-400">{{ $company->email ?? '—' }}</td>
                                 <td class="px-6 py-4">
-                                    <span class="rounded-full bg-slate-600/80 px-2.5 py-1 text-xs font-medium text-slate-300">
+                                    <span class="glass-badge text-slate-300">
                                         {{ $company->documents_count }}
                                     </span>
                                 </td>

@@ -14,7 +14,7 @@
 @endphp
 
 <div {{ $attributes->merge(['class' => 'flex items-center gap-4']) }}>
-    <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border shadow-lg {{ $iconClasses }}">
+    <span class="flex h-12 w-12 shrink-0 items-center justify-center glass-icon {{ $iconClasses }}">
         <x-icon :name="$icon" class="h-6 w-6" />
     </span>
     <div class="min-w-0 flex-1">

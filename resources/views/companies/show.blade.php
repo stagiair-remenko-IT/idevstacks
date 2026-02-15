@@ -15,7 +15,7 @@
                 </div>
             </div>
             <div class="flex items-center gap-2 shrink-0">
-                <a href="{{ route('companies.index') }}" class="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-slate-400 hover:bg-slate-700/50 hover:text-white transition">
+                <a href="{{ route('companies.index') }}" class="inline-flex items-center gap-2 glass-button-ghost px-3 py-2 text-sm text-slate-400 hover:text-white">
                     <x-icon name="arrow-left" class="h-4 w-4" />
                     {{ __('Back') }}
                 </a>
@@ -31,7 +31,7 @@
 
     <div class="space-y-6">
         {{-- Company details --}}
-        <div class="rounded-xl border border-slate-700/80 bg-slate-800/80 shadow-xl overflow-hidden">
+        <div class="glass-card overflow-hidden">
             <div class="border-b border-slate-700/80 bg-slate-800/50 px-6 py-4">
                 <h3 class="font-semibold text-slate-200">{{ __('Company details') }}</h3>
             </div>
@@ -74,7 +74,7 @@
         </div>
 
         {{-- Documentation for this company --}}
-        <div class="rounded-xl border border-slate-700/80 bg-slate-800/80 shadow-xl overflow-hidden">
+        <div class="glass-card overflow-hidden">
             <div class="flex items-center justify-between border-b border-slate-700/80 bg-slate-800/50 px-6 py-4">
                 <h3 class="font-semibold text-slate-200">{{ __('Documentation') }}</h3>
                 @can('create', \App\Models\Document::class)
@@ -107,7 +107,7 @@
                         </thead>
                         <tbody>
                             @foreach($documents as $doc)
-                                <tr class="border-b border-slate-700/50 hover:bg-slate-700/40 transition">
+                                <tr class="border-b border-white/5 hover:bg-white/5 transition">
                                     <td class="px-6 py-3">
                                         <a href="{{ route('documents.show', $doc) }}" class="font-medium text-indigo-400 hover:text-indigo-300">
                                             {{ $doc->title }}

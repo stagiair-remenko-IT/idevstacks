@@ -20,10 +20,10 @@
             @csrf
             @method('delete')
 
-            <h2 class="text-lg font-semibold text-slate-800">
+            <h2 class="text-lg font-semibold text-white">
                 {{ __('Are you sure you want to delete your account?') }}
             </h2>
-            <p class="mt-1 text-sm text-slate-600">
+            <p class="mt-1 text-sm text-slate-400">
                 {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
             </p>
 
@@ -35,11 +35,11 @@
 
             <div class="mt-6 flex justify-end gap-3">
                 <button type="button" x-on:click="$dispatch('close')"
-                        class="inline-flex items-center px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-800 text-sm font-medium focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        class="inline-flex items-center px-4 py-2 glass-button-ghost text-slate-200 text-sm font-medium">
                     {{ __('Cancel') }}
                 </button>
                 <button type="submit"
-                        class="inline-flex items-center px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                        class="inline-flex items-center px-4 py-2 rounded-xl backdrop-blur-md bg-red-500/80 hover:bg-red-500 text-white text-sm font-semibold border border-red-400/30">
                     {{ __('Delete Account') }}
                 </button>
             </div>
