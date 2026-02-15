@@ -17,8 +17,18 @@
 
     <div class="py-8">
         <div class="max-w-3xl mx-auto sm:px-6 lg:px-8">
-            <div class="rounded-2xl bg-slate-800/80 border border-slate-700/80 shadow-xl overflow-hidden backdrop-blur-sm">
+            <div class="glass-card overflow-hidden">
                 <div class="p-6 sm:p-8">
+                    @if($errors->any())
+                        <div class="mb-6 rounded-xl bg-red-500/15 border border-red-500/40 px-4 py-3 text-sm text-red-300">
+                            <p class="font-medium">{{ __('Please fix the following errors:') }}</p>
+                            <ul class="mt-2 list-disc list-inside space-y-1">
+                                @foreach($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     <form method="POST" action="{{ route('admin.users.update', $user) }}" class="space-y-6">
                         @csrf
                         @method('PUT')
@@ -26,13 +36,13 @@
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                             <div>
                                 <x-input-label for="name" value="{{ __('Name') }}" class="text-slate-400" />
-                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500"
+                                <x-text-input id="name" name="name" type="text" class="mt-1 block w-full"
                                               :value="old('name', $user->name)" required autofocus />
                                 <x-input-error :messages="$errors->get('name')" class="mt-1" />
                             </div>
                             <div>
                                 <x-input-label for="email" value="{{ __('Email') }}" class="text-slate-400" />
-                                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500"
+                                <x-text-input id="email" name="email" type="email" class="mt-1 block w-full"
                                               :value="old('email', $user->email)" required />
                                 <x-input-error :messages="$errors->get('email')" class="mt-1" />
                             </div>
@@ -42,7 +52,7 @@
                             <div>
                                 <x-input-label for="role" value="{{ __('Role') }}" class="text-slate-400" />
                                 <select id="role" name="role"
-                                        class="mt-1 block w-full rounded-lg bg-slate-700/50 border-slate-600 text-white focus:border-indigo-500 focus:ring-indigo-500">
+                                        class="mt-1 block w-full glass-input">
                                     <option value="{{ \App\Models\User::ROLE_IT_WORKER }}" @selected(old('role', $user->role) === \App\Models\User::ROLE_IT_WORKER)>{{ __('IT Worker') }}</option>
                                     <option value="{{ \App\Models\User::ROLE_GLOBAL_ADMIN }}" @selected(old('role', $user->role) === \App\Models\User::ROLE_GLOBAL_ADMIN)>{{ __('Global Admin') }}</option>
                                 </select>
@@ -50,7 +60,7 @@
                             </div>
                             <div>
                                 <x-input-label for="password" value="{{ __('Reset password (optional)') }}" class="text-slate-400" />
-                                <x-text-input id="password" name="password" type="password" class="mt-1 block w-full bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500" />
+                                <x-text-input id="password" name="password" type="password" class="mt-1 block w-full" />
                                 <p class="mt-1 text-xs text-slate-500">
                                     {{ __('Leave blank to keep the current password.') }}
                                 </p>
@@ -60,7 +70,7 @@
 
                         <div>
                             <x-input-label for="password_confirmation" value="{{ __('Confirm password') }}" class="text-slate-400" />
-                            <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full bg-slate-700/50 border-slate-600 text-white placeholder-slate-500 focus:border-indigo-500 focus:ring-indigo-500" />
+                            <x-text-input id="password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" />
                         </div>
 
                         <div class="flex items-center justify-between gap-3 pt-4">
@@ -70,23 +80,25 @@
                             </a>
                             <div class="flex items-center gap-3">
                                 <button type="submit"
-                                        class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition">
+                                        class="inline-flex items-center gap-2 glass-button px-5 py-2.5 text-white text-sm font-semibold">
                                     {{ __('Save changes') }}
                                 </button>
                                 @can('delete', $user)
-                                    <form method="POST" action="{{ route('admin.users.destroy', $user) }}" class="inline"
-                                          onsubmit="return confirm('{{ __('Are you sure you want to delete this user?') }}');">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit"
-                                                class="inline-flex items-center px-4 py-2 rounded-lg bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition">
-                                            {{ __('Delete') }}
-                                        </button>
-                                    </form>
+                                    <button type="button"
+                                            onclick="if(confirm('{{ __('Are you sure you want to delete this user?') }}')) { document.getElementById('delete-user-form').submit(); }"
+                                            class="inline-flex items-center px-4 py-2 rounded-lg bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 focus:ring-offset-slate-800 transition">
+                                        {{ __('Delete') }}
+                                    </button>
                                 @endcan
                             </div>
                         </div>
                     </form>
+                    @can('delete', $user)
+                        <form id="delete-user-form" method="POST" action="{{ route('admin.users.destroy', $user) }}" class="hidden">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    @endcan
                 </div>
             </div>
         </div>
